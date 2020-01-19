@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.SavedStateViewModelFactory;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.mrlove.roombasic2.databinding.ActivityMainBinding;
 import com.mrlove.roombasic2.domain.Word;
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
      MyViewModel myViewModel;
     //DatabindingBinding 由框架编译时生成，负责通知界面同步更新(命名方式：xml文件名 + Binding)；
      ActivityMainBinding binding;
+     MyAdapter myAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,17 +29,16 @@ public class MainActivity extends AppCompatActivity {
         myViewModel = new ViewModelProvider(this,new SavedStateViewModelFactory(getApplication(),this)).get(MyViewModel.class);
         //为布局文件设置源数据
         binding.setData(myViewModel);
+        myAdapter = new MyAdapter();
+        binding.recyclerview.setLayoutManager(new LinearLayoutManager(this));
+        binding.recyclerview.setAdapter(myAdapter);
+
         //为实现LiveData的数据设置观察者，以便当数据改变时通知UI更新数据
         myViewModel.getAllWordsLive().observe(this, new Observer<List<Word>>() {
             @Override
             public void onChanged(List<Word> words) {
-                //用StringBuilder保证在内存中只创建了一个对象，而String += ...，在每次+的时候实际都会创建一个新的对象。
-                StringBuilder str = new StringBuilder();
-                for (Word word: words
-                ) {
-                    str.append(word.getId()).append(":").append(word.getWord()).append("=").append(word.getChineseMeaning()).append("\n");
-                }
-                binding.textView2.setText(str.toString());
+                  myAdapter.setAllWords(words);
+                  myAdapter.notifyDataSetChanged();
             }
         });
         //添加
