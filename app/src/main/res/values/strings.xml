@@ -9,4 +9,5 @@
     <string name="textEnglish">English</string>
     <string name="textChinese">中文</string>
     <string name="Imgarrow">arrow</string>
+    <string name="text_switch">布局开关</string>
 </resources>
