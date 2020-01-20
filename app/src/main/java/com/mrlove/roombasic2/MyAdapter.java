@@ -18,7 +18,7 @@ import com.mrlove.roombasic2.domain.Word;
 import java.util.ArrayList;
 import java.util.List;
 
-//RecyclerView内容管理器类
+//RecyclerView内容管理器类 泛型参数指定为自己的<MyAdapter.MyViewHolder>
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     private List<Word> allWords = new ArrayList<>();

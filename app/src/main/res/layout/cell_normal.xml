@@ -7,7 +7,8 @@
            name="data"
            type="com.mrlove.roombasic2.MyViewModel" />
     </data>
-
+    <!--android:clickable="true" 实现元素的可点击-->
+    <!-- android:foreground="?attr/selectableItemBackground" 为点击创建点击效果-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
